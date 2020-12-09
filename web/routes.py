@@ -4,9 +4,6 @@ from web.models import ClassFactory
 from flask_migrate import upgrade, migrate, init
 import os, signal
 
-print(db.engine.table_names())
-print(db.metadata.tables)
-
 f = "../room.tmp"
 tables = {}
 print ("tables = {}".format(type(tables)))

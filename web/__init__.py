@@ -12,9 +12,6 @@ db = SQLAlchemy(app)
 db.init_app(app)
 migrate = Migrate(app, db)
 
-print('root = ', app.root_path)
-print('instance = ', app.instance_path)
-
 moment = Moment(app)
 
 from web import routes, models
