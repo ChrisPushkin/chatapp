@@ -4,9 +4,8 @@ from web.models import ClassFactory
 from flask_migrate import upgrade, migrate, init
 import os, signal
 
-f = "../room.tmp"
+f = "./room.tmp"
 tables = {}
-print ("tables = {}".format(type(tables)))
 
 def shutdown_server():
   func = request.environ.get('werkzeug.server.shutdown')
