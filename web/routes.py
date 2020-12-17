@@ -6,6 +6,7 @@ import os, signal
 
 f = "./room.tmp"
 tables = {}
+db_status = {}
 
 def shutdown_server():
   func = request.environ.get('werkzeug.server.shutdown')
@@ -25,20 +26,38 @@ def write_2_file(room):
       for p in tables[room].query.order_by(db.desc(tables[room].id)).all():
         file.write("[{}] {}: {}\n".format(p.timestamp, p.username, p.messages))
 
+def db_health():
+  try:
+    db.session.query("1").all()
+    db_status['status'] = 'ok'
+  except:
+    db_status['status'] = 'DB connection lost'
+  return db_status
+
 @app.route('/stopServer', methods=['GET'])
 def stopServer():
   shutdown_server()
   os.kill(os.getpid(), signal.SIGINT)
   return jsonify({ "success": True, "message": "Server is shutting down..." })
 
-@app.route('/')
-@app.route('/<room>')
-def room(room=None):
-  return send_from_directory('static', 'index.html')
+@app.route('/healthz')
+def healthz():
+  return (res := db_health()), 400 if 'lost' in res['status'] else res
+  #return db_status['status'], 400 if not db_health() and 'lost' in db_status['status'] else db_status['status']
+
+#@app.route('/')
+#@app.route('/<room>')
+#def room(room=None):
+#  #return (res := db_health()), 400 if 'lost' in res['status'] else send_from_directory('static', 'index.html')
+##  if 'lost' in (res := db_health())['status']: return res, 400
+#  print(room)
+#  return send_from_directory('static', 'index.html')
 
 @app.route('/api/chat/<room>', methods=['GET', 'POST'])
 @app.route('/api/chat/', methods=['GET', 'POST'])
 def data(room='general'):
+  #if not db_health() and 'lost' in db_status['status']: return db_status['status'], 400
+  if 'lost' in (res := db_health())['status']: return res, 400
   create_table_instance(room)
   if request.method == 'POST':
     if room not in db.engine.table_names():
@@ -56,7 +75,7 @@ def data(room='general'):
 @app.route('/chat/<room>')
 @app.route('/chat/')
 def display(room='general'):
-  print("room = ", room)
+  if 'lost' in (res := db_health())['status']: return res, 400
   create_table_instance(room)
   write_2_file(room)
   messages = []
