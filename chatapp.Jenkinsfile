@@ -39,7 +39,6 @@ pipeline{
       } */
       stage('E2E') {
         steps {
-          sh 'ls -A'
           sh 'docker-compose up -d'
           sh './tests.sh ${REPO} 9000'
         }
@@ -71,6 +70,7 @@ pipeline{
     post{
         always{
             echo "========always========"
+            sh 'printenv'
         }
         success{
             echo "========pipeline executed successfully ========"

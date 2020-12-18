@@ -16,9 +16,19 @@ services:
     ports:
     - "9000:80"
     volumes:
-    - ./web/static:/usr/share/nginx/html
+      - jenkins_home:/var/jenkins_home
+      #- ./web/static:/usr/share/nginx/html
       #- ./nginx:/etc/nginx/nginx.conf
+    command: >
+      sh -c "ln -s ${WORKSPACE}/nginx/nginx.conf /etc/nginx/nginx.conf &&
+             ln -s ${WORKSPACE}/web/static/* /usr/share/nginx/html &&
+             ./docker-entrypoint.sh"
+
 
   app:
     container_name: app
     image: ${REPO}
+
+volumes:
+  jenkins_home:
+    external: true
