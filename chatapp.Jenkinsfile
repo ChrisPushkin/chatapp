@@ -2,7 +2,7 @@ pipeline{
     agent any
 
     environment {
-    REPO = 'devops2030/chatapp'
+      REPO = 'devops2030/chatapp'
     }
     stages{
       stage('Pull'){
@@ -39,8 +39,9 @@ pipeline{
       } */
       stage('E2E') {
         steps {
+          sh 'ls -A'
           sh 'docker-compose up -d'
-          sh './tests.sh ${env.REPO} 9000'
+          sh './tests.sh ${REPO} 9000'
         }
         post{
           always{
