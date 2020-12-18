@@ -39,7 +39,7 @@ pipeline{
       } */
       stage('E2E') {
         steps {
-          sh 'docker-compose up -d'
+          sh 'docker-compose up'
           sh './tests.sh ${REPO} 9000'
         }
         post{
