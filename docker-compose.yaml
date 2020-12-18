@@ -10,9 +10,27 @@ services:
       MYSQL_PASSWORD: 123
       MYSQL_DATABASE: chat
 
+  wait_db:
+    container_name: wait_db
+    image: busybox:1.28
+    command: sh -c 'while ! nc -z -v -w 3 db 3306; do sleep 5; done'
+
+  app:
+    container_name: app
+    image: ${REPO}
+    depends_on:
+    - wait_db
+
+  wait_app:
+    container_name: wait_app
+    image: busybox:1.28
+    command: sh -c 'while ! nc -z -v -w 3 app 5000; do sleep 5; done'
+
   proxy:
     container_name: proxy
     image: nginx:alpine
+    depends_on:
+    - wait_app
     ports:
     - "9000:80"
     volumes:
@@ -28,11 +46,6 @@ services:
              ln -s ${WORKSPACE}/web/static /usr/share/nginx/html &&
              echo '4' &&
              exec /docker-entrypoint.sh nginx -g 'daemon off;' && echo '5'"
-
-
-  app:
-    container_name: app
-    image: ${REPO}
 
 volumes:
   jenkins_home:

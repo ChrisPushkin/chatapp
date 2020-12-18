@@ -3,7 +3,7 @@
 # My test script example - made for Alpine linux (Busybox)
 
 # Proccess command line args
-ret=12
+ret=$1; shift
 addr=$1; shift
 port=$1; shift
 data=$1

@@ -3,6 +3,9 @@ pipeline{
 
     environment {
       REPO = 'devops2030/chatapp'
+      RETRIES = 20
+      ADDR = '192.168.1.128'
+      PORT = 9000
     }
     stages{
       stage('Pull'){
@@ -39,13 +42,7 @@ pipeline{
       } */
       stage('E2E') {
         options {
-          timeout(time: 2, unit: "MINUTES")
-        }
-        post {
-          always{
-            echo "========always========"
-            sh 'docker-compose down'
-          }
+          timeout(time: 3, unit: "MINUTES")
         }
         parallel {
           stage('Runtime') {
@@ -55,8 +52,13 @@ pipeline{
           }
           stage('E2E') {
             steps {
-              sh './tests.sh localhost 9000'
-              sh 'docker-compose down'
+              sh './tests.sh ${RETRIES} ${ADDR} ${PORT}'
+            }
+            post {
+              always{
+                echo "========always========"
+                sh 'docker-compose down'
+              }
             }
           }
         }
@@ -82,7 +84,7 @@ pipeline{
     post{
         always{
             echo "========always========"
-            sh 'printenv'
+            //sh 'printenv'
         }
         success{
             echo "========pipeline executed successfully ========"
