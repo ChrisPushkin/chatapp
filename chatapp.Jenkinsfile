@@ -47,7 +47,12 @@ pipeline{
         parallel {
           stage('Runtime') {
             steps {
-              sh 'docker-compose up'
+              sh 'docker-compose up -d db'
+              sh 'docker-compose up wait_db'
+              sh 'docker-compose up -d app'
+              sh 'docker-compose up wait_app'
+              sh 'docker-compose up -d proxy'
+              sh 'docker-compose logs -f db app proxy'
             }
           }
           stage('E2E') {
