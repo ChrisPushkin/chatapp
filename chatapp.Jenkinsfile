@@ -8,7 +8,7 @@ pipeline{
       stage('Pull'){
         steps{
           echo "========executing A========"
-          git url: 'git@github.com:BLshlomo/chatapp.git', branch: 'master', credentialsId: 'admin'
+          git url: 'git@github.com:BLshlomo/chatapp.git', branch: 'dev', credentialsId: 'admin'
         }
         post{
           always{
