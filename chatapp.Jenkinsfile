@@ -38,14 +38,26 @@ pipeline{
         }
       } */
       stage('E2E') {
-        steps {
-          sh 'docker-compose up'
-          sh './tests.sh ${REPO} 9000'
+        options {
+          timeout(time: 2, unit: "MINUTES")
         }
-        post{
+        post {
           always{
             echo "========always========"
             sh 'docker-compose down'
+          }
+        }
+        parallel {
+          stage('Runtime') {
+            steps {
+              sh 'docker-compose up'
+            }
+          }
+          stage('E2E') {
+            steps {
+              sh './tests.sh localhost 9000'
+              sh 'docker-compose down'
+            }
           }
         }
       }
