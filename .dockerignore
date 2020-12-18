@@ -9,3 +9,4 @@
 **/chat.Dockerfile
 **/room.tmp
 **/*.bak
+**/.chatapp.config.json
