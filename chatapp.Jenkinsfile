@@ -4,7 +4,7 @@ pipeline{
   environment {
     REPO = 'devops2030/chatapp'
     RETRIES = 20
-    ADDR = '192.168.1.128'
+    ADDR = 'localhost'
     PORT = 9000
   }
   options { 
