@@ -44,20 +44,16 @@ def stopServer():
 @app.route('/healthz')
 def healthz():
   return (res := db_health()), 400 if 'lost' in res['status'] else res
-  #return db_status['status'], 400 if not db_health() and 'lost' in db_status['status'] else db_status['status']
 
-#@app.route('/')
-#@app.route('/<room>')
-#def room(room=None):
-#  #return (res := db_health()), 400 if 'lost' in res['status'] else send_from_directory('static', 'index.html')
-##  if 'lost' in (res := db_health())['status']: return res, 400
-#  print(room)
-#  return send_from_directory('static', 'index.html')
+@app.route('/')
+@app.route('/<room>')
+def room(room=None):
+  print(room)
+  return send_from_directory('static', 'index.html')
 
 @app.route('/api/chat/<room>', methods=['GET', 'POST'])
 @app.route('/api/chat/', methods=['GET', 'POST'])
 def data(room='general'):
-  #if not db_health() and 'lost' in db_status['status']: return db_status['status'], 400
   if 'lost' in (res := db_health())['status']: return res, 400
   create_table_instance(room)
   if request.method == 'POST':
