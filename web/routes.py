@@ -7,7 +7,7 @@ import os, signal
 f = "./room.tmp"
 tables = {}
 db_status = {}
-db_status['version'] = 'testing version number'
+db_status['version'] = 'build_number'
 
 def shutdown_server():
   func = request.environ.get('werkzeug.server.shutdown')

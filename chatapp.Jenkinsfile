@@ -13,7 +13,6 @@ pipeline{
   post{
     always{
       echo "========always========"
-      //sh 'printenv'
     }
     success{
       echo "========pipeline executed successfully ========"
@@ -23,27 +22,15 @@ pipeline{
     }
   }
   stages{
-    stage('Pull'){
+    stage('Version'){
       steps{
-        echo "========executing A========"
-        git url: 'git@github.com:BLshlomo/chatapp.git', branch: 'dev', credentialsId: 'admin'
-      }
-      post{
-        always{
-            echo "========always========"
-        }
-        success{
-            echo "========A executed successfully========"
-        }
-        failure{
-            echo "========A execution failed========"
-        }
+        sh "sed -i 's/build_number/${BUILD_NUMBER}/g' web/routes.py"
+        sh 'grep ${BUILD_NUMBER} web/routes.py'
       }
     }
     stage('Build') {
       steps {
         script {
-          sh 'whoami'
           img = docker.build (env.REPO, "-f chat.Dockerfile .")
         }
       }
