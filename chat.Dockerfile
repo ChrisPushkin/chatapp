@@ -12,8 +12,8 @@ RUN chmod u+x entrypoint.sh
 
 FROM python:3.8.6-alpine3.12 as run
 RUN adduser -HD -u 1000 chat
-ENV PATH=:/app/venv/bin:$PATH
 COPY --from=build --chown=chat:chat /app /app
 WORKDIR /app
 USER chat
+ENV PATH=:/app/venv/bin:$PATH
 ENTRYPOINT ["entrypoint.sh"]

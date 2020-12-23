@@ -2,7 +2,7 @@ pipeline{
   agent any
 
   environment {
-    REPO = 'devops2030/chatapp'
+    REPO = 'gcr.io/devel-final/chatapp'
     RETRIES = 20
     ADDR = 'localhost'
     PORT = 9000
@@ -63,7 +63,7 @@ pipeline{
     stage ('Publish') {
       steps {
         script {
-          docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+          docker.withRegistry('https://gcr.io', 'gcr:[devel-final]') {
             if ("${env.BRANCH_NAME}" =~ 'dev') {
               img.push("dev-${GIT_COMMIT}") 
             }
