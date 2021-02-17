@@ -5,7 +5,7 @@ COPY requirements.txt requirements.txt
 RUN python3 -m venv venv
 ENV PATH=:/app/venv/bin:$PATH
 RUN pip3 install --upgrade pip
-RUN pip3 install pymysql gunicorn cryptography
+RUN pip3 install pymysql gunicorn 'cryptography<3.3.2'
 RUN pip3 install -r requirements.txt
 COPY . .
 RUN chmod u+x entrypoint.sh
