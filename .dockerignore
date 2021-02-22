@@ -5,7 +5,6 @@
 **/venv/
 **/docker-compose.yaml
 **/.env
-**/chatapp.Jenkinsfile
 **/chat.Dockerfile
 **/room.tmp
 **/*.bak
