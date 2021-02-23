@@ -9,7 +9,13 @@ spec:
         app: db
     spec:
       containers:
-        - env:
+        - name: db
+          image: 'mysql:8.0.22'
+          ports:
+            - name: mysqlport
+              containerPort: 3306
+              protocol: TCP
+          env:
             - name: MYSQL_ROOT_PASSWORD
               value: 12345
             - name: MYSQL_USER
@@ -18,12 +24,6 @@ spec:
               value: 123
             - name: MYSQL_DATABASE
               value: chat
-          image: 'mysql:8.0.22'
-          name: db
-          ports:
-            - name: mysqlport
-              containerPort: 3306
-              protocol: TCP
   replicas: 1
   selector:
     matchLabels:
