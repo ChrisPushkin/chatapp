@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: db
 spec:
+  replicas: 1
   template:
     metadata:
       labels:
@@ -16,15 +17,14 @@ spec:
             containerPort: 3306
             protocol: TCP
         env:
-          - name: MYSQL_ROOT_PASSWORD
-            value: 12345
-          - name: MYSQL_USER
-            value: flask
-          - name: MYSQL_PASSWORD
-            value: 123
-          - name: MYSQL_DATABASE
-            value: chat
-  replicas: 1
+          - name: "MYSQL_ROOT_PASSWORD"
+            value: "12345"
+          - name: "MYSQL_USER"
+            value: "flask"
+          - name: "MYSQL_PASSWORD"
+            value: "123"
+          - name: "MYSQL_DATABASE"
+            value: "chat"
   selector:
     matchLabels:
       app: db
