@@ -9,21 +9,21 @@ spec:
         app: db
     spec:
       containers:
-        - name: db
-          image: 'mysql:8.0.22'
-          ports:
-            - name: mysqlport
-              containerPort: 3306
-              protocol: TCP
-          env:
-            - name: MYSQL_ROOT_PASSWORD
-              value: 12345
-            - name: MYSQL_USER
-              value: flask
-            - name: MYSQL_PASSWORD
-              value: 123
-            - name: MYSQL_DATABASE
-              value: chat
+      - name: db
+        image: 'mysql:8.0.22'
+        ports:
+          - name: mysqlport
+            containerPort: 3306
+            protocol: TCP
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: 12345
+          - name: MYSQL_USER
+            value: flask
+          - name: MYSQL_PASSWORD
+            value: 123
+          - name: MYSQL_DATABASE
+            value: chat
   replicas: 1
   selector:
     matchLabels:
