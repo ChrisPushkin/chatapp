@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: db
+spec:
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      containers:
+        - env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: 12345
+            - name: MYSQL_USER
+              value: flask
+            - name: MYSQL_PASSWORD
+              value: 123
+            - name: MYSQL_DATABASE
+              value: chat
+          image: 'mysql:8.0.22'
+          name: db
+          ports:
+            - name: mysqlport
+              containerPort: 3306
+              protocol: TCP
