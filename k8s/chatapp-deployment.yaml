@@ -15,7 +15,7 @@ spec:
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 5000
-replicas: 3
-selector:
-  matchLabels:
-    app: app
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app
