@@ -24,3 +24,7 @@ spec:
             - name: mysqlport
               containerPort: 3306
               protocol: TCP
+replicas: 1
+selector:
+  matchLabels:
+    app: db
