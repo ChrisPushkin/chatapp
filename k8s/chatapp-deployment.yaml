@@ -12,7 +12,7 @@ spec:
       containers:
       - name: app
         image: chat-app
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Never
         ports:
         - containerPort: 5000
   replicas: 3
