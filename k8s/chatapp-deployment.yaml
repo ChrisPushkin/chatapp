@@ -12,7 +12,7 @@ spec:
       containers:
       - name: app
         image: gcr.io/chat-app-305410/chat-app:v0.1
-        imagePullPolicy: Never
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 5000
   replicas: 3
