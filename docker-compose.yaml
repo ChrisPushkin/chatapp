@@ -17,7 +17,7 @@ services:
 
   app:
     container_name: app
-    image: chat-app
+    image: gcr.io/chat-app-305410/chat-app:v0.1
     depends_on:
     - wait_db
 
