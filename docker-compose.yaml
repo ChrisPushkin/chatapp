@@ -17,9 +17,12 @@ services:
 
   app:
     container_name: app
-    image: gcr.io/chat-app-305410/chat-app:v0.1
+    #image: gcr.io/chat-app-305410/chat-app:v0.1
+    image: chat-app
     depends_on:
     - wait_db
+    ports:
+    - "8080:5000"
 
   wait_app:
     container_name: wait_app
